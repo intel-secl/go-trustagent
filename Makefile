@@ -3,7 +3,7 @@ GITCOMMIT := $(shell git describe --always)
 GITCOMMITDATE := $(shell git log -1 --date=short --pretty=format:%cd)
 GITBRANCH := $(CI_COMMIT_BRANCH)
 BUILDDATE := $(shell TZ=UTC date +%Y-%m-%dT%H:%M:%SZ)
-VERSION := "v4.1.1"
+VERSION := "v4.1.2"
 PROXY_EXISTS := $(shell if [[ "${https_proxy}" || "${http_proxy}" ]]; then echo 1; else echo 0; fi)
 DOCKER_PROXY_FLAGS := ""
 ifeq ($(PROXY_EXISTS),1)
@@ -13,7 +13,7 @@ else
 endif
 MONOREPO_GITURL := "https://github.com/intel-secl/intel-secl"
 #TODO use the latest tag
-MONOREPO_GITBRANCH := "v4.1.1"
+MONOREPO_GITBRANCH := "v4.1.2"
 
 gta:
 	env GOOS=linux GOSUMDB=off GOPROXY=direct go mod tidy && env CGO_CFLAGS_ALLOW="-f.*" GOOS=linux GOSUMDB=off GOPROXY=direct go build -ldflags "-X intel/isecl/go-trust-agent/v4/util.Branch=$(GITBRANCH) -X intel/isecl/go-trust-agent/v4/util.Version=$(VERSION) -X intel/isecl/go-trust-agent/v4/util.GitHash=$(GITCOMMIT) -X intel/isecl/go-trust-agent/v4/util.BuildDate=$(BUILDDATE)" -o out/tagent
